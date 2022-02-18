@@ -26,22 +26,22 @@ export default function App() {
     getMovies();
   }, []);
 
-  const addToSavedList = (id) => {
+  const addToSavedList = id => {
     // This is stretch. Prevent the same movie from being "saved" more than once
-    if (movieList.id === id && !saved.includes(id)) {
-      setSaved([...saved, movieList.id])
+    if (!saved.includes(id)) {
+      setSaved([...saved, id])
     }
   };
 
   return (
     <div>
-      <SavedList list={saved} addToSaved={addToSavedList} />
+      <SavedList key={movieList.id} list={saved} addToSaved={addToSavedList} />
       <Switch>
         <Route path={"/movies/:id"}>
-          <Movie />
+          <Movie key={movieList.id} addToSavedList={addToSavedList} />
         </Route>
         <Route path={"/"}>
-          <MovieList movies={movieList} />
+          <MovieList key={movieList.id} movies={movieList} />
         </Route>
       </Switch>
       <div>Replace this Div with your Routes</div>
